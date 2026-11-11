@@ -1111,7 +1111,7 @@ export function DataAppTopbar({
             <div className="dashboard-topbar-actions">
               {mode !== "edit" && (
                 <>
-                  <DataAppOverflowMenu
+                  {(canEdit || published) && <DataAppOverflowMenu
                     canEdit={canEdit && !editingBlocked}
                     canSwitchTheme={canEdit}
                     getActionHref={getActionHref}
@@ -1133,7 +1133,7 @@ export function DataAppTopbar({
                     triggerRef={moreButtonRef}
                     published={published}
                     surface={surface}
-                  />
+                  />}
                   {canEdit && (
                     <span className="history-tooltip-trigger" data-delayed-tooltip>
                       <button
@@ -1171,7 +1171,7 @@ export function DataAppTopbar({
                   </Tooltip>
                 )}
               </span>}
-              {(!published || mode === "edit") && (
+              {canEdit && (!published || mode === "edit") && (
                 <DataAppPublishButton
                   published={published}
                   getActionHref={getActionHref}
