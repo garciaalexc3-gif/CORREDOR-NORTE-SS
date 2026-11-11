@@ -1,0 +1,7 @@
+**/node_modules/
+**/dist/
+**/.data-app-assets/
+**/.data-app-offline/
+**/.data-app-publish/
+.env*
+**/.env*
