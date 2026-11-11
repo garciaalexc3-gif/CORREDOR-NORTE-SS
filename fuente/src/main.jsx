@@ -13,11 +13,14 @@ import "./theme-runtime.js";
 import { App } from "./App.jsx";
 import reviewedSnapshot from "./data.json";
 
-const hosted = (globalThis.location?.hostname.endsWith(".chatgpt.site") ?? false)
-  || Boolean(globalThis.document?.querySelector('meta[name="data-app-sites-project"][content="corredor-norte"]'));
+const githubPages = globalThis.location?.hostname.endsWith(".github.io") ?? false;
+const hosted = !githubPages && (
+  (globalThis.location?.hostname.endsWith(".chatgpt.site") ?? false)
+  || Boolean(globalThis.document?.querySelector('meta[name="data-app-sites-project"][content="corredor-norte"]'))
+);
 
 export function DataAppRuntime() {
-  return <App hosted={hosted} />;
+  return <App hosted={hosted} staticDemo={!hosted} />;
 }
 
 if (typeof document !== "undefined") {

@@ -547,7 +547,7 @@ function DataAppOverflowMenu({
   published,
   surface,
 }) {
-  const exportOptions = dataAppExportOptions(useOptionalDataAppShell()?.snapshot).filter(({ id }) => id !== "site");
+  const exportOptions = dataAppExportOptions(useOptionalDataAppShell()?.snapshot).filter(({ id }) => id !== "site" && (canEdit || published));
   const [destination, setDestination] = useState(() => readHandoffDestination() ?? "ask");
   const canSetHandoffPreference = published && Boolean(workspaceCookieDomain());
   const hasActions = published || surface !== "report" || (canEdit && mode === "edit" && hiddenCount > 0);
@@ -607,7 +607,7 @@ function DataAppOverflowMenu({
                 Edit text and layout
               </MenuItem>
             )}
-            {!published && (
+            {!published && canEdit && (
               <MenuItem
                 icon="globe"
                 className="dashboard-action-menu-item"
@@ -640,7 +640,7 @@ function DataAppOverflowMenu({
               Copy link
             </MenuItem>
           )}
-          {surface !== "report" && (
+          {surface !== "report" && (canEdit || published) && (
             <MenuItem
               icon="copy"
               className="dashboard-action-menu-item"
@@ -696,7 +696,7 @@ function DataAppOverflowMenu({
               Ask ChatGPT
             </option>}
             {canEdit && <option value="edit">Edit text and layout</option>}
-            {!published && (
+            {!published && canEdit && (
               <option value="publish" aria-label="Publish" disabled={publishDisabled}>
                 Publish
               </option>
@@ -704,7 +704,7 @@ function DataAppOverflowMenu({
             {canEdit && <option value="theme">Switch theme</option>}
             {published && <option value="copy-link">Copy link</option>}
             {published && onOpenHandoffSettings && <option value="handoff-settings">Open in ChatGPT settings</option>}
-            {surface !== "report" && <option value="duplicate">Create a copy</option>}
+            {surface !== "report" && (canEdit || published) && <option value="duplicate">Create a copy</option>}
             {canEdit && mode === "edit" && hiddenCount > 0 && (
               <option value="restore">Restore hidden ({hiddenCount})</option>
             )}
